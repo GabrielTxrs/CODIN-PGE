@@ -1,0 +1,37 @@
+# Build Folders
+bin/
+obj/
+
+# Rider project files
+.idea/
+*.sln.iml
+
+# User-specific files
+*.user
+*.userosscache
+*.suo
+*.userprefs
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Entity Framework Migrations
+Migrations/
+
+# Logs
+*.log
+
+# Visual Studio Code
+.vscode/
+
+# ASP.NET Core Secret Manager
+secrets.json
+
+# DotNet
+*.dotnet_toolchain
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/

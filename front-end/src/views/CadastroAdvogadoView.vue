@@ -1,6 +1,5 @@
 <template>
     <form @submit.prevent="handleSubmit" class="cadastro-form">
-        <h2>Cadastro de Cliente</h2>
         <div class="row">
             <div class="col-lg-4 md-4 sm-8">
                 <fieldset>
@@ -36,7 +35,7 @@
                     <input type="email" id="email" v-model="form.EMAIL" maxlength="60" required />
 
                 </fieldset>
-                <button>Cadastrar</button>
+                <button type="submit">Login</button>
             </div>
         </div>
     </form>

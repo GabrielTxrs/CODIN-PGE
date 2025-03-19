@@ -3,10 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace back_end.Models;
 
-public class Advogado (
-    Guid idAdvogado,
-    bool isProcurador,
-    string oab,
+[Table("TB_CLIENTE")]
+public class Cliente (
+    Guid idCliente,
     string nomePessoaFisica,
     string? nomeSocial,
     string cpf,
@@ -15,14 +14,22 @@ public class Advogado (
     string email,
     DateOnly dataNascimento)
 {
-    public Guid IdAdvogado { get; init; } = idAdvogado;
-    public bool IsProcurador { get; set; } = isProcurador;
-    public string Oab { get; set; } = oab;
+    [Key]
+    [Column("ID_CLIENTE")]
+    public Guid IdCliente { get; init; } = idCliente;
+    [Column("NM_PESSOA_FISICA")]
     public string NomePessoaFisica { get; set; } = nomePessoaFisica;
+    
+    [Column("NM_SOCIAL")]
     public string? NomeSocial { get; set; } = nomeSocial;
+    [Column("NR_CPF")]
     public string Cpf { get; set; } = cpf;
-    public string Celular {get ; set;} = celular;
-    public string? Telefone {get ; set;} = telefone;
-    public string Email {get ; set;} = email;
+    [Column("NR_CELULAR")]
+    public string Celular { get; set; } = celular;
+    [Column("NR_TELEFONE")]
+    public string? Telefone { get; set; } = telefone;
+    [Column("EMAIL")]
+    public string Email { get; set; } = email;
+    [Column("DT_NASCIMENTO")]
     public DateOnly DataNascimento { get; set; } = dataNascimento;
 }

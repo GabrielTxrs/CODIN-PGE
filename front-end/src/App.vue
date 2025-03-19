@@ -8,7 +8,7 @@ import { RouterLink, RouterView } from 'vue-router'
 
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-          <RouterLink class="navbar-brand" to="/">Tela Inicial</RouterLink>
+          <RouterLink class="navbar-brand" to="/">CODIN PGE</RouterLink>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
             aria-label="Toggle navigation">
@@ -21,6 +21,12 @@ import { RouterLink, RouterView } from 'vue-router'
                 <RouterLink class="nav-link active" to="/processos">Processos</RouterLink>
               </li>
 
+              <li class="nav-item">
+                <RouterLink class="nav-link active" to="/cadastro-cliente">Cliente</RouterLink>
+              </li>
+              <li class="nav-item">
+                <RouterLink class="nav-link active" to="/cadastro-advogado">Advogado</RouterLink>
+              </li>
             </ul>
           </div>
 

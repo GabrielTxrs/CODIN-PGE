@@ -38,19 +38,15 @@
                 <button type="submit">Login</button>
             </div>
         </div>
-
     </form>
 </template>
 
-<script>
-import VueDatePicker from '@vuepic/vue-datepicker';
-import '@vuepic/vue-datepicker/dist/main.css'
+<script setup>
+    import VueDatePicker from '@vuepic/vue-datepicker';
+    import '@vuepic/vue-datepicker/dist/main.css'
+    import { ref } from 'vue';
 
-export default {
-    components: { VueDatePicker },
-    data() {
-        return {
-            form: {
+    const form = ref({
                 NM_PESSOA_FISICA: '',
                 NM_SOCIAL: '',
                 NR_CPF: '',
@@ -58,18 +54,15 @@ export default {
                 NR_TELEFONE: '',
                 EMAIL: '',
                 DT_NASCIMENTO: null,
-            },
-        };
-    },
-    methods: {
-        handleSubmit() {
-            console.log('Form submitted:', this.form);
-        },
-        filterNumeric(field) {
-            this.form[field] = this.form[field].replace(/\D/g, '');
-        },
-    },
-};
+            });
+    
+    function handleSubmit() {
+        console.log('Form submitted:', form.value);
+    }
+    function filterNumeric(field) {
+        form.value[field] = form.value[field].replace(/\D/g, '');
+    }
+
 </script>
 
 <style scoped>

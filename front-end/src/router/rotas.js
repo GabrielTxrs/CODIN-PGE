@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import CadastroCliente from '@/views/cliente/CadastroCliente.vue'
 import Advogado from '@/views/advogado/Advogado.vue'
 import CadastroAdvogado from '@/views/advogado/CadastroAdvogado.vue'
+import AlterarCliente from '@/views/cliente/AlterarCliente.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,6 +30,12 @@ const router = createRouter({
     {
       path: '/cadastro-cliente',
       component: CadastroCliente,
+    },
+    {
+      path: '/alterar-cliente/:idCliente', // New route with dynamic parameter
+      name: 'alterar-cliente',
+      component: AlterarCliente,
+      props: true, // Pass route params as props to the component
     },
     {
       path: '/advogado',

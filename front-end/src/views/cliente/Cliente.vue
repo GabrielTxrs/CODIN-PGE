@@ -6,12 +6,12 @@
             <legend>Buscar Cliente:</legend>
 
             <label for="idCliente">Id</label>
-            <input type="text" id="idCliente" v-model="form.IdCliente" maxlength="100"/>
+            <input type="text" id="idCliente" v-model="filtro.idCliente" maxlength="100" />
 
             <label for="NomePessoaFisica">Nome </label>
-            <input type="text" id="NomePessoaFisica" v-model="form.NomePessoaFisica" maxlength="100" />
+            <input type="text" id="NomePessoaFisica" v-model="filtro.nomePessoaFisica" maxlength="100" />
 
-            <button id="buscar" @click="buscarCliente">Buscar</button>
+            <button class="btn btn-success m-1" @click.prevent="buscarCliente">Buscar</button>
         </fieldset>
 
         <table class="table table-bordered table-striped">
@@ -38,28 +38,28 @@
                     <td>{{ cliente.celular }}</td>
                     <td>{{ cliente.telefone }}</td>
                     <td>{{ cliente.email }}</td>
-                    <td>{{ cliente.dataNascimento }}</td>
-                    <td><button @click="alterarCliente(cliente)">Alterar</button></td>
-                    <td><button @click="excluirCliente(cliente.idCliente)">Excluir</button></td>
+                    <td>{{ cliente.dataNascimento.substring(0,10) }}</td>
+                    <td><RouterLink class="btn btn-warning" :to="{ name: 'alterar-cliente', params: { idCliente: cliente.idCliente } }">Alterar</RouterLink></td>
+                    <td><button class="btn btn-danger" @click="excluirCliente(cliente.idCliente)">Excluir</button></td>
                 </tr>
             </tbody>
         </table>
 
     </form>
-    <RouterLink class="button" to="/cadastro-cliente">Cadastrar Cliente</RouterLink>
+    <RouterLink class="btn btn-primary m-5" to="/cadastro-cliente">Cadastrar Cliente</RouterLink>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
-const form = ref({
-    IdCliente: '',
-    NomePessoaFisica: ''
+const filtro = ref({
+    idCliente: '',
+    nomePessoaFisica: ''
 });
 
-const clientes = ref([
-{
+let clientes = ref([
+    {
         idCliente: 1,
         nomePessoaFisica: 'João Silva',
         nomeSocial: '',
@@ -72,37 +72,46 @@ const clientes = ref([
 ]);
 
 async function buscarCliente() {
-    console.log("buscando")
     try {
-        const response = await axios.get('https://localhost:7251/get-cliente-filtro', {
-            params: {
-                id: form.value.IdCliente,
-                nome: form.value.NomePessoaFisica
-            }
+        let id = '';
+        let nome = '';
+        const params = new URLSearchParams();
+        if (filtro.value.idCliente != undefined && filtro.value.idCliente != '') {
+            id = filtro.value.idCliente;
+            params.append('id', id);
+        }
+        if (filtro.value.nomePessoaFisica != undefined && filtro.value.nomePessoaFisica != '') {
+            nome = filtro.value.nomePessoaFisica;
+            params.append('nome', nome);
+        }
+
+        axios.get('https://localhost:7251/get-cliente-filtro', {
+            params: params
+        }).then((resposta) => {
+            clientes.value = resposta.data
         });
-        clientes.value = response.data;
     } catch (error) {
         console.error('Erro ao buscar clientes:', error);
     }
 }
 
-
-function alterarCliente(cliente) {
-    console.log('Alterar cliente:', cliente);
-}
-
 function excluirCliente(idCliente) {
-    console.log("excluindo")
-    axios.delete(`https://localhost:7251/remover-cliente/${idCliente}`)
-        .then(() => {
-            console.log(`Cliente com ID ${idCliente} excluído com sucesso.`);
-            // Remove o cliente da tabela
-            clientes.value = clientes.value.filter(cliente => cliente.idCliente !== idCliente);
-        })
-        .catch(error => {
-            console.error(`Erro ao excluir cliente com ID ${idCliente}:`, error);
-        });
+    if (idCliente != undefined && idCliente != '') {
+        axios.delete(`https://localhost:7251/remover-cliente/${idCliente}`)
+            .then(() => {
+                console.log(`Cliente com ID ${idCliente} excluído com sucesso.`);
+                // Remove o cliente da tabela
+                clientes.value = clientes.value.filter(cliente => cliente.idCliente !== idCliente);
+            })
+            .catch(error => {
+                console.error(`Erro ao excluir cliente com ID ${idCliente}:`, error);
+            });
+    }
+    buscarCliente();
 }
+onMounted(() => {
+    buscarCliente();
+});
 </script>
 
 <style scoped>
@@ -124,27 +133,4 @@ function excluirCliente(idCliente) {
     font-size: 1rem;
 }
 
-#buscar {
-  margin-left: 1.35rem;
-  padding: 8px;
-  font-size: 1rem;
-  color: white;
-  border-color: #007bff;
-  background-color: #007bff; 
-  border-radius: 5px;
-}
-
-.button {
-    display: inline-block;
-    margin: 3rem; 
-    padding: 15px 30px;
-    font-size: 18px;
-    color: white;
-    background-color: #007bff;
-    border-radius: 5px;
-}
-
-.button:hover {
-    background-color: #0056b3;
-}
 </style>

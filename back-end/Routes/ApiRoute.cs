@@ -8,14 +8,6 @@ public static class ApiRoute
 {
     public static void ApiRoutes(this WebApplication app)
     {
-        app.MapGet("ola-mundo", () => "Ola mundo");
-        app.MapGet("advogado", () => new Advogado(1, true, "oab",
-            "nomePessoaFisica", "nomeSocial", "cpf", "celular", "telefone", "email", new DateOnly(2000, 1, 1)));
-
-        app.MapGet("cliente",
-            () => new Cliente(1, "nomePessoaFisica", "nomeSocial", "cpf", "celular",
-                "telefone", "email", new DateOnly(2000, 1, 1)));
-
         // Adicionar Cliente
         app.MapPost("/add-cliente", async (AppDbContext db, Cliente cliente) =>
         {
@@ -43,7 +35,6 @@ public static class ApiRoute
             }
 
             var clientes = await query.ToListAsync();
-
             return clientes.Any() ? Results.Ok(clientes) : Results.NotFound();
         });
         

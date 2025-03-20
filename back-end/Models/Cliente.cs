@@ -5,18 +5,17 @@ namespace back_end.Models;
 
 [Table("TB_CLIENTE")]
 public class Cliente (
-    int idCliente,
     string nomePessoaFisica,
     string? nomeSocial,
     string cpf,
     string celular,
     string? telefone,
     string email,
-    DateOnly dataNascimento)
+    DateTime dataNascimento)
 {
     [Key]
     [Column("ID_CLIENTE")]
-    public int IdCliente { get; init; } = idCliente;
+    public int IdCliente { get; init; } = Guid.NewGuid().GetHashCode();
     [Column("NM_PESSOA_FISICA")]
     public string NomePessoaFisica { get; set; } = nomePessoaFisica;
     
@@ -31,5 +30,5 @@ public class Cliente (
     [Column("EMAIL")]
     public string Email { get; set; } = email;
     [Column("DT_NASCIMENTO")]
-    public DateOnly DataNascimento { get; set; } = dataNascimento;
+    public DateTime DataNascimento { get; set; } = dataNascimento;
 }

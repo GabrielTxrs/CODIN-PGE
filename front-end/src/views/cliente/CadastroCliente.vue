@@ -6,17 +6,17 @@
                 <fieldset>
                     <legend>Dados básicos:</legend>
                     <label for="nmPessoaFisica">Nome Completo*</label>
-                    <input type="text" id="nmPessoaFisica" v-model="form.NM_PESSOA_FISICA" maxlength="100" required />
+                    <input type="text" id="nmPessoaFisica" v-model="form.nomePessoaFisica" maxlength="100" required />
 
                     <label for="nmSocial">Nome Social</label>
-                    <input type="text" id="nmSocial" v-model="form.NM_SOCIAL" maxlength="100" />
+                    <input type="text" id="nmSocial" v-model="form.nomeSocial" maxlength="100" />
 
                     <label for="nrCpf">CPF*</label>
-                    <input type="text" id="nrCpf" v-model="form.NR_CPF" maxlength="11" @input="filterNumeric('NR_CPF')"
+                    <input type="text" id="nrCpf" v-model="form.cpf" maxlength="11" @input="filterNumeric('cpf')"
                         required />
 
                     <label>Data de Nascimento*</label>
-                    <VueDatePicker v-model="form.DT_NASCIMENTO" :enableTimePicker="false" placeholder="dd/mm/yyyy"
+                    <VueDatePicker v-model="form.dataNascimento" :enableTimePicker="false" placeholder="dd/mm/yyyy"
                         teleport-center required />
                 </fieldset>
             </div>
@@ -25,44 +25,64 @@
                 <fieldset>
                     <legend>Contato:</legend>
                     <label for="nrCelular">Celular*</label>
-                    <input type="text" id="nrCelular" v-model="form.NR_CELULAR" maxlength="14"
-                        @input="filterNumeric('NR_CELULAR')" required />
+                    <input type="text" id="nrCelular" v-model="form.celular" maxlength="14"
+                        @input="filterNumeric('celular')" required />
 
                     <label for="nrTelefone">Telefone</label>
-                    <input type="text" id="nrTelefone" v-model="form.NR_TELEFONE" maxlength="14"
-                        @input="filterNumeric('NR_TELEFONE')" />
+                    <input type="text" id="nrTelefone" v-model="form.telefone" maxlength="14"
+                        @input="filterNumeric('telefone')" />
 
                     <label for="email">Email*</label>
-                    <input type="email" id="email" v-model="form.EMAIL" maxlength="60" required />
+                    <input type="email" id="email" v-model="form.email" maxlength="60" required />
 
                 </fieldset>
-                <button type="submit">Cadastrar</button>
+                <button class="btn btn-primary mt-4 p-1" type="submit">Cadastrar</button>
             </div>
         </div>
     </form>
 </template>
 
 <script setup>
-    import VueDatePicker from '@vuepic/vue-datepicker';
-    import '@vuepic/vue-datepicker/dist/main.css'
-    import { ref } from 'vue';
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
+import { ref } from 'vue';
+import axios from 'axios';
 
-    const form = ref({
-                NM_PESSOA_FISICA: '',
-                NM_SOCIAL: '',
-                NR_CPF: '',
-                NR_CELULAR: '',
-                NR_TELEFONE: '',
-                EMAIL: '',
-                DT_NASCIMENTO: null,
-            });
-    
-    function handleSubmit() {
-        console.log('Form submitted:', form.value);
+const form = ref({
+    nomePessoaFisica: '',
+    nomeSocial: '',
+    cpf: '',
+    celular: '',
+    telefone: '',
+    email: '',
+    dataNascimento: null,
+});
+
+function handleSubmit() {
+    console.log('Form submitted:', form.value);
+    try {
+        const Cliente = {
+            nomePessoaFisica: form.value.nomePessoaFisica,
+            nomeSocial: form.value.nomeSocial,
+            cpf: form.value.cpf,
+            celular: form.value.celular,
+            telefone: form.value.telefone,
+            email: form.value.email,
+            dataNascimento: form.value.dataNascimento,
+        };
+
+        console.log(Cliente)
+        axios.post('https://localhost:7251/add-cliente', Cliente).then(response => {
+            console.log('Cliente cadastrado com sucesso:', response.data);
+        });
+
+    } catch (error) {
+        console.error('Erro ao cadastrar cliente:', error);
     }
-    function filterNumeric(field) {
-        form.value[field] = form.value[field].replace(/\D/g, '');
-    }
+}
+function filterNumeric(field) {
+    form.value[field] = form.value[field].replace(/\D/g, '');
+}
 
 </script>
 
@@ -84,17 +104,4 @@
     width: 100%;
 }
 
-button {
-  margin-top: 1.35rem;
-  padding: 7px;
-  font-size: 1rem;
-  color: white;
-  border-color:#007bff;
-  background-color: #007bff; 
-  border-radius: 5px;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
 </style>

@@ -4,7 +4,11 @@
 
 ```sh
 $ cd front-end
+```
+```sh
 $ npm install
+```
+```sh
 $ npm run dev
 ```
 

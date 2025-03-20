@@ -34,7 +34,7 @@
                         <label for="email">Email*</label>
                         <input type="email" id="email" v-model="cliente.email" maxlength="60" required />
                     </fieldset>
-                    <button class="btn btn-primary m-4 p-1" type="submit">Atualizar Cliente</button>
+                    <button class="btn btn-primary m-4 p-1" type="submit">Alterar Dados Cadastrais</button>
                 </div>
             </div>
         </form>
@@ -57,10 +57,10 @@ let cliente = ref({
     nomePessoaFisica: "",
     nomeSocial: "",
     cpf: "",
-    dataNascimento: "",
     email: "",
     telefone: "",
-    celular: ""
+    celular: "",
+    dataNascimento: ""
 });
 
 async function buscarCliente(idCliente) {

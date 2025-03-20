@@ -70,5 +70,71 @@ public static class ApiRoute
 
             return Results.NotFound();
         });
+        
+        // Adicionar Advogado
+        app.MapPost("/add-advogado", async (AppDbContext db, Advogado advogado) =>
+        {
+            db.Advogados.Add(advogado);
+            await db.SaveChangesAsync();
+            return Results.Created($"/add-advogado/{advogado.IdAdvogado}", advogado);
+        });
+
+        // Get All Advogados
+        app.MapGet("/get-advogado", async (AppDbContext db) =>
+            await db.Advogados.ToListAsync());
+        
+        app.MapGet("/get-advogado-filtro", async (AppDbContext db, int? id, string? nome) =>
+        {
+            var query = db.Advogados.AsQueryable();
+            
+            if (id.HasValue)
+            {
+                query = query.Where(c => c.IdAdvogado == id.Value);
+            }
+
+            if (!string.IsNullOrEmpty(nome))
+            {
+                query = query.Where(c => c.NomePessoaFisica.Contains(nome));
+            }
+
+            var advogados = await query.ToListAsync();
+            return advogados.Any() ? Results.Ok(advogados) : Results.NotFound();
+        });
+        
+        // Update Advogado por ID
+        app.MapPut("/update-advogado/{id}", async (AppDbContext db, int id, Advogado inputAdvogado) =>
+        {
+            var advogado = await db.Advogados.FindAsync(id);
+
+            if (advogado is null) return Results.NotFound();
+
+            advogado.Oab = inputAdvogado.Oab;
+            advogado.IsProcurador = inputAdvogado.IsProcurador; 
+            advogado.NomePessoaFisica = inputAdvogado.NomePessoaFisica;
+            advogado.NomeSocial = inputAdvogado.NomeSocial;
+            advogado.Cpf = inputAdvogado.Cpf;
+            advogado.Celular = inputAdvogado.Celular;
+            advogado.Telefone = inputAdvogado.Telefone;
+            advogado.Email = inputAdvogado.Email;
+            advogado.DataNascimento = inputAdvogado.DataNascimento;
+
+            await db.SaveChangesAsync();
+
+            return Results.NoContent();
+        });
+
+        // Deletar Advogado por ID
+        app.MapDelete("/remover-advogado/{id}", async (AppDbContext db, int? id) =>
+        {
+            if (await db.Advogados.FindAsync(id) is { } advogado)
+            {
+                db.Advogados.Remove(advogado);
+                await db.SaveChangesAsync();
+                return Results.Ok(advogado);
+            }
+
+            return Results.NotFound();
+        });
+        
     }
 }

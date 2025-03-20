@@ -100,7 +100,6 @@ function filterNumeric(field) {
 
 .cadastro-form input {
     padding: 0.5rem;
-    font-size: 1rem;
     width: 100%;
 }
 

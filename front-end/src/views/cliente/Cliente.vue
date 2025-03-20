@@ -17,7 +17,7 @@
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
                 <tr>
-                    <th>ID Cliente</th>
+                    <th>ID</th>
                     <th>Nome</th>
                     <th>Nome Social</th>
                     <th>CPF</th>

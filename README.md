@@ -9,3 +9,16 @@ $ npm run dev
 ```
 
 # Rodar o Back End em Dotnet 
+
+```sh
+$ cd back-end
+```
+```sh
+$ dotnet restore
+```
+```sh
+$ dotnet build
+```
+```sh
+$ dotnet run
+```

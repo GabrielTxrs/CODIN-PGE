@@ -9,25 +9,13 @@ public static class ApiRoute
     public static void ApiRoutes(this WebApplication app)
     {
         app.MapGet("ola-mundo", () => "Ola mundo");
-        app.MapGet("advogado", () => new Advogado(Guid.NewGuid(), true, "oab",
+        app.MapGet("advogado", () => new Advogado(1, true, "oab",
             "nomePessoaFisica", "nomeSocial", "cpf", "celular", "telefone", "email", new DateOnly(2000, 1, 1)));
 
         app.MapGet("cliente",
-            () => new Cliente(Guid.NewGuid(), "nomePessoaFisica", "nomeSocial", "cpf", "celular",
+            () => new Cliente(1, "nomePessoaFisica", "nomeSocial", "cpf", "celular",
                 "telefone", "email", new DateOnly(2000, 1, 1)));
-        // {
-        //     "idAdvogado": "4bcdaac6-f56d-4d33-839a-dedd5da7c449",
-        //     "idUsuario": "a0eb3cea-e725-4479-afbe-e21ef593ec50",
-        //     "isProcurador": true,
-        //     "oab": "oab",
-        //     "nomePessoaFisica": "nomePessoaFisica",
-        //     "nomeSocial": "nomeSocial",
-        //     "cpf": "cpf",
-        //     "celular": "celular",
-        //     "telefone": "telefone",
-        //     "email": "email",
-        //     "dataNascimento": "2000-01-01"
-        // }
+
         // Adicionar Cliente
         app.MapPost("/add-cliente", async (AppDbContext db, Cliente cliente) =>
         {
@@ -39,16 +27,28 @@ public static class ApiRoute
         // Get All Clientes
         app.MapGet("/get-cliente", async (AppDbContext db) =>
             await db.Clientes.ToListAsync());
+        
+        app.MapGet("/get-cliente-filtro", async (AppDbContext db, int? id, string? nome) =>
+        {
+            var query = db.Clientes.AsQueryable();
+            
+            if (id.HasValue)
+            {
+                query = query.Where(c => c.IdCliente == id.Value);
+            }
 
-        // Get Cliente por ID 
-        app.MapGet("/get-cliente/{id:guid}", async (AppDbContext db, Guid id) =>
-            await db.Clientes.FindAsync(id)
-                is { } cliente
-                ? Results.Ok(cliente)
-                : Results.NotFound());
+            if (!string.IsNullOrEmpty(nome))
+            {
+                query = query.Where(c => c.NomePessoaFisica.Contains(nome));
+            }
 
+            var clientes = await query.ToListAsync();
+
+            return clientes.Any() ? Results.Ok(clientes) : Results.NotFound();
+        });
+        
         // Update Cliente por ID
-        app.MapPut("/update-cliente/{id:guid}", async (AppDbContext db, Guid id, Cliente inputCliente) =>
+        app.MapPut("/update-cliente/{id}", async (AppDbContext db, int id, Cliente inputCliente) =>
         {
             var cliente = await db.Clientes.FindAsync(id);
 
@@ -67,8 +67,8 @@ public static class ApiRoute
             return Results.NoContent();
         });
 
-        // Delete Cliente por ID
-        app.MapDelete("/clientes/{id:guid}", async (AppDbContext db, Guid id) =>
+        // Deletar Cliente por ID
+        app.MapDelete("/remover-cliente/{id}", async (AppDbContext db, int? id) =>
         {
             if (await db.Clientes.FindAsync(id) is { } cliente)
             {

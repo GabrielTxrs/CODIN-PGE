@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <RouterLink class="button" to="/cadastro-cliente">Cadastrar Cliente</RouterLink>
-    <RouterLink class="button" to="/cadastro-advogado">Cadastrar Advogado</RouterLink>
+    <RouterLink class="button" to="/cliente">Menu de Cliente</RouterLink>
+    <RouterLink class="button" to="/advogado">Menu de Advogado</RouterLink>
   </div>
 </template>
 

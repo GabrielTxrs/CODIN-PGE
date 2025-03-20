@@ -36,7 +36,7 @@
                     <input type="email" id="email" v-model="form.EMAIL" maxlength="60" required />
 
                 </fieldset>
-                <button>Cadastrar</button>
+                <button type="submit">Cadastrar</button>
             </div>
         </div>
     </form>
@@ -68,7 +68,7 @@
 
 <style scoped>
 .cadastro-form {
-    /* display: flex; */
+    display: flex;
     flex-direction: column;
     gap: 1rem;
     margin: 3rem;
@@ -85,11 +85,11 @@
 }
 
 button {
-  display: inline-block;
   margin-top: 1.35rem;
   padding: 7px;
   font-size: 1rem;
   color: white;
+  border-color:#007bff;
   background-color: #007bff; 
   border-radius: 5px;
 }

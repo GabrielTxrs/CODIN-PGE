@@ -1,5 +1,6 @@
 <template>
     <form @submit.prevent="handleSubmit" class="cadastro-form">
+        <h2>Cadastro de Advogado</h2>
         <div class="row">
             <div class="col-lg-4 md-4 sm-8">
                 <fieldset>

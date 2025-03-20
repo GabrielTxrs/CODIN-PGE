@@ -5,7 +5,6 @@ import { RouterLink, RouterView } from 'vue-router'
 <template>
   <header>
     <div class="wrapper">
-
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
           <RouterLink class="navbar-brand" to="/">CODIN PGE</RouterLink>
@@ -22,10 +21,10 @@ import { RouterLink, RouterView } from 'vue-router'
               </li>
 
               <li class="nav-item">
-                <RouterLink class="nav-link active" to="/cadastro-cliente">Cliente</RouterLink>
+                <RouterLink class="nav-link active" to="/cliente">Cliente</RouterLink>
               </li>
               <li class="nav-item">
-                <RouterLink class="nav-link active" to="/cadastro-advogado">Advogado</RouterLink>
+                <RouterLink class="nav-link active" to="/advogado">Advogado</RouterLink>
               </li>
             </ul>
           </div>

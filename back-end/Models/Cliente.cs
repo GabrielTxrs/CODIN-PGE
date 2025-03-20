@@ -5,7 +5,7 @@ namespace back_end.Models;
 
 [Table("TB_CLIENTE")]
 public class Cliente (
-    Guid idCliente,
+    int idCliente,
     string nomePessoaFisica,
     string? nomeSocial,
     string cpf,
@@ -16,7 +16,7 @@ public class Cliente (
 {
     [Key]
     [Column("ID_CLIENTE")]
-    public Guid IdCliente { get; init; } = idCliente;
+    public int IdCliente { get; init; } = idCliente;
     [Column("NM_PESSOA_FISICA")]
     public string NomePessoaFisica { get; set; } = nomePessoaFisica;
     

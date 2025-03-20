@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace back_end.Models;
 
 public class Advogado (
-    Guid idAdvogado,
+    int idAdvogado,
     bool isProcurador,
     string oab,
     string nomePessoaFisica,
@@ -15,7 +15,7 @@ public class Advogado (
     string email,
     DateOnly dataNascimento)
 {
-    public Guid IdAdvogado { get; init; } = idAdvogado;
+    public int IdAdvogado { get; init; } = idAdvogado;
     public bool IsProcurador { get; set; } = isProcurador;
     public string Oab { get; set; } = oab;
     public string NomePessoaFisica { get; set; } = nomePessoaFisica;

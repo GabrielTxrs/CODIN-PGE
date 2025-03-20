@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import CadastroView from '@/views/CadastroView.vue'
+import Cliente from '@/views/cliente/Cliente.vue'
+import Home from '../views/Home.vue'
+import CadastroCliente from '@/views/cliente/CadastroCliente.vue'
+import Advogado from '@/views/advogado/Advogado.vue'
+import CadastroAdvogado from '@/views/advogado/CadastroAdvogado.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,7 +11,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView,
+      component: Home,
     },
     {
       path: '/processos',
@@ -16,18 +19,26 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/ProcessosView.vue'),
+      component: () => import('../views/Processos.vue'),
+    },
+    {
+      path: '/cliente',
+      name: 'cliente',
+      component: Cliente,
     },
     {
       path: '/cadastro-cliente',
-      name: 'cadastro-cliente',
-      component: CadastroView,
+      component: CadastroCliente,
+    },
+    {
+      path: '/advogado',
+      name: 'advogado',
+      component: Advogado,
     },
     {
       path: '/cadastro-advogado',
-      name: 'cadastro-advogado',
-      component: CadastroView,
-    }
+      component: CadastroAdvogado,
+    },
   ],
 })
 
